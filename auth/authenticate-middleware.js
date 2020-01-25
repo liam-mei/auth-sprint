@@ -8,8 +8,8 @@ module.exports = (req, res, next) => {
 
     const token = req.headers.authorization;
     const decoded = jwt.verify(token, secrets.secret);
-    decoded ? next() : next({ status: 401, error: "token invalid" });
+    next();
   } catch (err) {
-    next(err);
+    next({ ...err, status: 401 });
   }
 };
