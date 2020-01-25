@@ -1,6 +1,6 @@
 require("dotenv").config();
 const server = require("./api/server.js");
-const secrets = require("./secrets");
+const secrets = require("./configs/secrets");
 
 const PORT = secrets.port;
 server.listen(PORT, () => {

@@ -2,7 +2,7 @@ const router = require("express").Router();
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const userModel = require("../database/userModel");
-const secrets = require("../secrets");
+const secrets = require("../configs/secrets");
 const { checkUsernameUnique } = require("../middleware");
 
 router.post("/register", checkUsernameUnique, async (req, res, next) => {
@@ -31,7 +31,8 @@ router.post("/login", async (req, res, next) => {
       // Token Implementation
       const token = jwt.sign(user, secrets.secret, { expiresIn: "7d" });
       // If we want to use cookie for token instead of having user save it
-      // res.cookie('token', token, { maxAge: 1000 * 60 * 60 * 24 * 7 })
+      // res.cookie('token', token, { maxAge: 1000 * 60 * 60 * 24 * 7 })  // cookie good for 7 days
+
       res.json({ message: `Welcome ${username}`, token });
     } else {
       next({ status: 401, error: "Invalid Credentials" });
