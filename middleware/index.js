@@ -10,21 +10,27 @@ function wrongRoute(req, res, next) {
 
 function errorHandler(err, req, res, next) {
   console.log("Global Error: ", err);
-  res.status(err.status || 500).json({ message: err.message, err });
+  res.status(err.status || 500);
+  delete err.status;
+  res.json({ message: err.message, err });
 }
 
-function checkUsernamePasswordExists(username, password) {
+function checkUsernamePasswordExists(req, res, next) {
+  const { username, password } = req.body;
   if (!username || !password)
-    next({ status: 400, message: "username and password required" });
+    next({ status: 400, error: "username and password required" });
+  next();
 }
 
-async function checkUsernameUnique(username) {
+async function checkUsernameUnique(req, res, next) {
+  const { username } = req.body;
   const user = await userModel.findOneBy({ username });
   if (user)
     next({
       status: 400,
-      message: `Username ${username} already exists, please chose another name`
+      error: `Username ${username} already exists, please chose another name`
     });
+  next();
 }
 
 module.exports = {
