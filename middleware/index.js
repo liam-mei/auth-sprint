@@ -17,19 +17,17 @@ function errorHandler(err, req, res, next) {
 
 function checkUsernamePasswordExists(req, res, next) {
   const { username, password } = req.body;
-  if (!username || !password)
+  if (!username || !password) {
     next({ status: 400, error: "username and password required" });
-  next();
+  } else {
+    next();
+  }
 }
 
-async function checkUsernameUnique(req, res, next) {
+async function usernameExists(req, res, next) {
   const { username } = req.body;
   const user = await userModel.findOneBy({ username });
-  if (user)
-    next({
-      status: 400,
-      error: `Username ${username} already exists, please chose another name`
-    });
+  req.user = user;
   next();
 }
 
@@ -38,5 +36,5 @@ module.exports = {
   wrongRoute,
   errorHandler,
   checkUsernamePasswordExists,
-  checkUsernameUnique
+  usernameExists
 };

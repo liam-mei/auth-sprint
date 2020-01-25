@@ -15,6 +15,7 @@ const {
   sanityCheck,
   wrongRoute,
   errorHandler,
+  usernameExists,
   checkUsernamePasswordExists
 } = require("../middleware");
 
@@ -36,7 +37,12 @@ server.use(express.json());
 // server.use(session(configs.sessionConfig));
 
 // Use Routers
-server.use("/api/auth", checkUsernamePasswordExists, authRouter);
+server.use(
+  "/api/auth",
+  checkUsernamePasswordExists,
+  usernameExists,
+  authRouter
+);
 server.use("/api/jokes", authenticate, jokesRouter);
 
 // Use Custom Middleware
