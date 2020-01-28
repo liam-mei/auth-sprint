@@ -7,6 +7,13 @@ beforeAll(async () => {
   await db.seed.run();
 });
 
+// afterAll(async (done) => {
+//   // console.log(db.close)
+//   // await db.close()
+//   process.exit
+//   done();
+// })
+
 describe("Auth Tests", () => {
   test("Sanity Check", async () => {
     expect(2 + 2).toBe(4);
