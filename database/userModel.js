@@ -1,6 +1,17 @@
 const db = require("./dbConfig");
 const bcrypt = require("bcryptjs");
 
+function findWithQuery(query = {}) {
+  const { page = 1, limit = 100, sortby = "id", sortdir = "asc" } = query;
+  const offset = limit * (page - 1);
+
+  return db("hubs")
+    .orderBy(sortby, sortdir)
+    .limit(limit)
+    .offset(offset)
+    .select();
+}
+
 function findAll() {
   return db("users");
 }
@@ -40,6 +51,7 @@ function removeOne(id) {
 }
 
 module.exports = {
+  findWithQuery,
   findAll,
   findAllBy,
   findOneBy,
