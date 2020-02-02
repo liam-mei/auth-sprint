@@ -3,14 +3,14 @@ const express = require("express");
 const cors = require("cors");
 const helmet = require("helmet");
 const morgan = require("morgan");
-const cookieParser = require("cookie-parser");
+// const cookieParser = require("cookie-parser");
 
 // Import Routers
-const authRouter = require("../auth/auth-router.js");
-const jokesRouter = require("../jokes/jokes-router.js");
+const authRouter = require("./auth-router.js");
+const jokesRouter = require("./jokes-router.js");
 
 // Import Middleware
-const authenticate = require("../auth/authenticate-middleware.js");
+const authenticate = require("../middleware/authenticate-middleware.js");
 const {
   sanityCheck,
   wrongRoute,

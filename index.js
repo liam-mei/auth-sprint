@@ -1,5 +1,5 @@
 require("dotenv").config();
-const server = require("./api/server.js");
+const server = require("./routers/server.js");
 const secrets = require("./configs/secrets");
 
 const PORT = secrets.port;
