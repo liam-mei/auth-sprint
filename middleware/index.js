@@ -1,7 +1,7 @@
 const userModel = require("../database/userModel");
 
 function sanityCheck(req, res, next) {
-  res.json({ message: "I work" });
+  res.json({ message: "I work", db_url: process.env.DATABASE_URL });
 }
 
 function wrongRoute(req, res, next) {
