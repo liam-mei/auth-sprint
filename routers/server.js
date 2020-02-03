@@ -5,6 +5,10 @@ const helmet = require("helmet");
 const morgan = require("morgan");
 // const cookieParser = require("cookie-parser");
 
+// Swagger Documentation
+const swaggerUi = require("swagger-ui-express");
+const swaggerDocument = require("./swagger.json");
+
 // Import Routers
 const authRouter = require("./auth-router.js");
 const jokesRouter = require("./jokes-router.js");
@@ -24,6 +28,8 @@ const server = express();
 server.use(helmet());
 server.use(cors());
 server.use(morgan("dev"));
+
+server.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // Cookie Parser if you want to use cookies for token
 // server.use(cookieParser());

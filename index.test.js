@@ -1,6 +1,6 @@
 const supertest = require("supertest");
 
-const server = require("./api/server");
+const server = require("./routers/server");
 const db = require("./database//dbConfig");
 
 beforeAll(async () => {
@@ -32,7 +32,7 @@ describe("Auth Tests", () => {
     const supertestServer = supertest(server);
     const res = await supertestServer
       .post("/api/auth/login")
-      .send({ username: "derrick1", password: "asdf" });
+      .send({ username: "user1", password: "asdf" });
     expect(res.body.token).toBeTruthy();
   });
 
@@ -40,7 +40,7 @@ describe("Auth Tests", () => {
     const supertestServer = supertest(server);
     const loginRes = await supertestServer
       .post("/api/auth/login")
-      .send({ username: "derrick1", password: "asdf" });
+      .send({ username: "user1", password: "asdf" });
     const token = loginRes.body.token;
     const jokeRes = await supertestServer
       .get("/api/jokes")
@@ -57,7 +57,7 @@ describe("Auth Tests", () => {
     expect(registerRes.body.newUser.username).toBe(username);
   });
   test("Register Throws Error When Registering non-unique username", async () => {
-    const username = "derrick1";
+    const username = "user1";
     const supertestServer = supertest(server);
     const res = await supertestServer
       .post("/api/auth/register")
